@@ -788,7 +788,7 @@ main() {
 			case "${DISTRO_ID}" in
 				"alpine")	
 					cd tt-kmd
-					$ROOT_CMD install .
+					$ROOT_CMD akms install .
 					$ROOT_CMD modeprobe tenstorrent
 					;;
 				*)
