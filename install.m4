@@ -277,10 +277,25 @@ warn() {
 }
 
 check_has_sudo_perms() {
-	if ! sudo true; then
-		error "Cannot use sudo, exiting..."
-		exit 1
-	fi
+    if command -v doas >/dev/null 2>&1; then
+        if doas true 2>/dev/null; then
+            ROOT_CMD="doas"
+            return
+        fi
+    fi
+
+    if command -v sudo >/dev/null 2>&1; then
+        if sudo -n true 2>/dev/null; then
+            ROOT_CMD="sudo"
+            return
+        else
+            error "Cannot use sudo , exiting..."
+            exit 1
+        fi
+    fi
+
+    error "Neither doas nor sudo is available or permitted, exiting..."
+    exit 1
 }
 
 detect_distro() {
