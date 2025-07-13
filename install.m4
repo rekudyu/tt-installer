@@ -765,7 +765,7 @@ main() {
 			if confirm "Force KMD reinstall?"; then
 				case "${DISTRO_ID}" in
 					"alpine")
-						$ROOT_CMD akms remove remove tenstorrent
+						$ROOT_CMD akms uninstall tenstorrent
 						git clone --branch "ttkmd-${KMD_VERSION}" "https://github.com/rekudyu/tt-kmd"
 						cd ttkmd-$(KMD_VERSION)
 						$ROOT_CMD akms install .
