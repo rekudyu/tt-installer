@@ -763,11 +763,21 @@ main() {
 		if KMD_INSTALLED_VERSION=$(modinfo -F version tenstorrent 2>/dev/null); then
 			warn "Found active KMD module, version ${KMD_INSTALLED_VERSION}."
 			if confirm "Force KMD reinstall?"; then
-				$ROOT_CMD dkms remove "tenstorrent/${KMD_INSTALLED_VERSION}" --all
-				git clone --branch "ttkmd-${KMD_VERSION}" https://github.com/tenstorrent/tt-kmd.git
-				$ROOT_CMD dkms add tt-kmd
-				$ROOT_CMD dkms install "tenstorrent/${KMD_VERSION}"
-				$ROOT_CMD modprobe tenstorrent
+				case "${DISTRO_ID}" in
+					"alpine")
+						$ROOT_CMD akms remove remove tenstorrent
+						git clone --branch "ttkmd-${KMD_VERSION}" "https://github.com/${TT_KMD_GH_REPO}"
+						$ROOT_CMD akms install .
+						$ROOT_CMD modeprobe tenstorrent
+						;;
+					*)
+						$ROOT_CMD dkms remove "tenstorrent/${KMD_INSTALLED_VERSION}" --all
+						git clone --branch "ttkmd-${KMD_VERSION}" "https://github.com/${TT_KMD_GH_REPO}"
+						$ROOT_CMD dkms add tt-kmd
+						$ROOT_CMD dkms install "tenstorrent/${KMD_VERSION}"
+						$ROOT_CMD modprobe tenstorrent
+						;;
+				esac
 			else
 				warn "Skipping KMD installation"
 			fi
