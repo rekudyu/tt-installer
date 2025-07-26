@@ -782,7 +782,6 @@ main() {
 			else
 				warn "Skipping KMD installation"
 			fi
-			esac
 		else
 			# Only install KMD if it's not already installed
 			git clone --branch "ttkmd-${KMD_VERSION}" https://github.com/tenstorrent/tt-kmd.git
