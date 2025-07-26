@@ -112,7 +112,7 @@ fetch_latest_systools_version() {
 }
 
 # Fetch latest tt-smi version
-TT_SMI_GH_REPO="tenstorrent/tt-smi"
+TT_SMI_GH_REPO="rekudyu/tt-smi"
 fetch_latest_smi_version() {
 	if ! command -v jq &> /dev/null; then
 		exit
